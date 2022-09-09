@@ -5,6 +5,8 @@ const peer = new Peer(undefined, {
   path: "/peerjs",
 });
 
+const rooms = {};
+
 socket.on("connection", () => {
   console.log("connected to server");
 });
@@ -56,13 +58,16 @@ navigator.mediaDevices
         conn.on("open", () => {
           const call = peer.call(newPeerId, stream);
           call.on("stream", (newStream) => {
-            const newVideo = document.createElement("video");
-            videoBox.classList.add("video");
-            newVideo.srcObject = newStream;
-            newVideo.addEventListener("loadedmetadata", () => {
-              newVideo.play();
-            });
-            container.append(newVideo);
+            if (!rooms.hasOwnProperty(newPeerId)) {
+              const newVideo = document.createElement("video");
+              videoBox.classList.add("video");
+              newVideo.srcObject = newStream;
+              newVideo.addEventListener("loadedmetadata", () => {
+                newVideo.play();
+              });
+              container.append(newVideo);
+              rooms[newPeerId] = true;
+            }
           });
         });
       }, 2000);
