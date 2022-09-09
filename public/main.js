@@ -29,7 +29,7 @@ container.append(videoBox);
 navigator.mediaDevices
   .getUserMedia({
     video: true,
-    // audio: true,
+    audio: true,
   })
   .then((stream) => {
     videoBox.srcObject = stream;

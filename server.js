@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-
+app.use(cors());
 app.get("/", (req, res) => {
   res.render("index");
 });
